@@ -3,11 +3,12 @@
 
 #define EXTERNAL_NEOPIXELS 21
 #define NUM_LEDS 128
+
 CRGBArray<NUM_LEDS> leds;
 int x = 0;  // Continuity Constant for Animation frames
 
 // Adafruit_VS1053_FilePlayer musicPlayer =
-//   Adafruit_VS1053_FilePlayer(-1, VS1053_CS, VS1053_DCS, VS1053_DREQ, CARDCS);
+// Adafruit_VS1053_FilePlayer(-1, VS1053_CS, VS1053_DCS, VS1053_DREQ, CARDCS);
 
 
 #include "bladeAnimations.h"
@@ -33,29 +34,6 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 }
-
-
-
-// audio runs on core 2!
-
-#include <I2S.h>
-
-// #include "boot.h"
-// #include "hithere.h"
-
-struct {
-  const uint8_t *data;
-  uint32_t       len;
-  uint32_t       rate;
-} sound[] = {
-  hithereAudioData, sizeof(hithereAudioData), hithereSampleRate,
-  bootAudioData   , sizeof(bootAudioData)   , bootSampleRate,
-};
-#define N_SOUNDS (sizeof(sound) / sizeof(sound[0]))
-
-I2S i2s(OUTPUT);
-
-uint8_t sndIdx = 0;
 
 
 void setup1(void) {

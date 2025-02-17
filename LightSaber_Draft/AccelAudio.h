@@ -1,3 +1,6 @@
+#include <Adafruit_VS1053.h>
+
+#include <stdio.h>
 /*
   Still kinda trying to figure out how im gonna do sound so this is very experimental
   currently the 2 methods im experimenting with are:
@@ -26,34 +29,27 @@
   try to implement the Music Maker FeatherWing but may switch.
 */
 
+//(Adafruit_Feather_M4_Express)
+#define VS1053_CS   6 // VS1053 chip select pin (output)
+#define VS1053_DCS 10 // VS1053 Data/command select pin (output)
+#define CARDCS      5 // Card chip select pin
+#define VS1053_DREQ 9 // VS1053 Data request, ideally an Interrupt pin
+
 //(Adafruit_Feather_RP2040_Prop-Maker)
-#define VS1053_CS 32    // VS1053 chip select pin (output)
-#define VS1053_DCS 33   // VS1053 Data/command select pin (output)
-#define CARDCS 14       // Card chip select pin
-#define VS1053_DREQ 15  // VS1053 Data request, ideally an Interrupt pin
+// #define VS1053_CS 32    // VS1053 chip select pin (output)
+// #define VS1053_DCS 33   // VS1053 Data/command select pin (output)
+// #define CARDCS 14       // Card chip select pin
+// #define VS1053_DREQ 15  // VS1053 Data request, ideally an Interrupt pin
 
 Adafruit_VS1053_FilePlayer musicPlayer =
-  Adafruit_VS1053_FilePlayer(-1, VS1053_CS, VS1053_DCS, VS1053_DREQ, CARDCS);
-
-
-
-
-
-
-
-
-
-
-
-
-
+   Adafruit_VS1053_FilePlayer(-1, VS1053_CS, VS1053_DCS, VS1053_DREQ, CARDCS);
 
 
 String findFilePath(File dir, String name, String path)// hopefully there isn't too many folders RAM might be an issue if there is
 {
   if(dir.isDirectory()) { // confirm the starting file is a directory
     File entry = dir.openNextFile(); // move to the next file
-    while(entry.print(String) != name) 
+    while(entry.print() != name) 
     {
       if(!entry) //check if theres any files left in this directory
       {
@@ -66,7 +62,7 @@ String findFilePath(File dir, String name, String path)// hopefully there isn't 
         String returnPath = findFilePath(entry, name, nextPath); // check the next directory
         (SD.open(returnPath).print(String) == name) ?  entry = SD.open(returnPath) : entry = dir.openNextFile();
       }
-      if(entry.print(String).compareTo(name)) // WE FOUND IT BOIS WWOOOOOO! PASS THE PATH IT BACK THE LINE
+      if(entry.print().compareTo(name)) // WE FOUND IT BOIS WWOOOOOO! PASS THE PATH IT BACK THE LINE
       {
         path.concat("/" + name); //complete the path
         Serial.println("\n WE FOUND IT BOIS!!! \n File path found calling back. \n");
@@ -80,11 +76,5 @@ String findFilePath(File dir, String name, String path)// hopefully there isn't 
     return "";
   }
 }
-
-//(Adafruit_Feather_M4_Express)
-// #define VS1053_CS 6    // VS1053 chip select pin (output)
-// #define VS1053_DCS 10  // VS1053 Data/command select pin (output)
-// #define CARDCS 5       // Card chip select pin
-// #define VS1053_DREQ 9  // VS1053 Data request, ideally an Interrupt pin
 
 

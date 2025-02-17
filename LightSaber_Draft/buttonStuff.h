@@ -1,7 +1,7 @@
-#define REDPIN    29
-#define GREENPIN  24
-#define BLUEPIN   25
-#define BUTTONPIN 19 // or EXTERNAL_BUTTON
+#define REDPIN        29
+#define GREENPIN      24
+#define BLUEPIN       25
+#define BUTTONPIN     19 // or EXTERNAL_BUTTON
 
 #define TOPBUTTON     13
 #define MIDDLEBUTTON  12
